@@ -17,30 +17,24 @@ jsonfile.readFile(file, (err, obj) => {
   {
 
   	let geoType = obj.features[i].geometry.type;
-
   	if (geoType === `Polygon`) {
 
   		let provinceName = obj.features[i].properties.NAME_1;
   		let polyCoor = obj.features[i].geometry.coordinates;
   		let coordinates = polyCoor[0];
-
   		let results = coordinates.map (x => {
   		  let finalList = {};
   			finalList[`y`] = x[0]; finalList[`x`] = x[1];
   			return finalList;
+
   		})
 
 
       let original = addPrecision(results, PRECISION)
-
       let b = simplify(original, tolerance)
-
       let finalResult = convertToLatLng(returnPrecision(b, PRECISION))
-
-
   	  createFile(provinceName, finalResult);
-
-
+      
   	} else { 
 
      if (geoType === `MultiPolygon`) {
@@ -51,11 +45,9 @@ jsonfile.readFile(file, (err, obj) => {
 		let provinceName = featureTemp.properties["PROVINCE"];
 		for (let polygonKey in geometryTemp.coordinates) {	
 			let coordinates = [];
-			
 			let polygon = geometryTemp.coordinates[polygonKey];
 			
-			for (let coordinateListkey in polygon) {
-				
+      for (let coordinateListkey in polygon) {
 				for (let key in polygon[coordinateListkey]) {
 					let coord = {};
 						coord.y = polygon[coordinateListkey][key][0];
@@ -63,23 +55,16 @@ jsonfile.readFile(file, (err, obj) => {
 						coordinates.push(coord);
 				}
 			}
-			
 			resultList.push(coordinates);
 		}
-		
       let original = resultList.map(element => addPrecision(element,PRECISION))
       let b = original.map(element => simplify(element,tolerance))
       let finalResult = b.map(element => convertToLatLng(returnPrecision(element,PRECISION)))
       createFile(provinceName, finalResult);
-
-	 
      }
   	}
   }
-
-
 })
-
     let addPrecision = function(input, precision) {
       let output = input.map(element => {
         let obj = {}
@@ -109,17 +94,12 @@ jsonfile.readFile(file, (err, obj) => {
     })
     return output
   }
-
-
     function createFile(provinceName, results) {
-
       let newFileName = provinceName.replace(/\s/g, '-').toLowerCase();
-
       let file = `output/15k/${newFileName}.json`
       jsonfile.writeFile(file, results, function (err) {
         console.error(err)
         console.log(`created ${newFileName} file`);
-
       })
     }
 
