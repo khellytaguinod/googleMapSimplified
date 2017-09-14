@@ -48,12 +48,11 @@
 
 
         // fetch('https://raw.githubusercontent.com/khellytaguinod/googleMapProject/master/provinces.json')
-        fetch('https://raw.githubusercontent.com/khellytaguinod/googleMapSimplified/master/provincesList.json')
-
+           fetch('https://raw.githubusercontent.com/khellytaguinod/googleMapProject/master/provinces.json')
           .then(response => response.json())
-          .then(provincesList => {
+          .then(provinces => {
             // Here's a list of repos!
-            console.log(provincesList)
+            console.log(provinces )
 
             provinces.forEach(fetchProvinceData)
           });
