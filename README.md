@@ -18,5 +18,6 @@ http://mourner.github.io/simplify-js/
 How does the program run:
 
 Simplifier.js gets the original coordinates of the provinces then output a multiple compressed json files simplifed by simplify.js.
-Each json files consist of the different provinces of the Philippines
+
+Each json files consist of compressed coordinates of the different provinces of the Philippines
 
